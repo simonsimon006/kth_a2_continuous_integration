@@ -22,11 +22,13 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
+
+    implementation 'org.eclipse.jetty.aggregate:jetty-all:7.0.2.v20100331'
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'kth_a2_continuous_integration.App'
+    mainClass = 'kth_a2_continuous_integration.ContinuousIntegrationServer'
 }
 
 tasks.named('test') {

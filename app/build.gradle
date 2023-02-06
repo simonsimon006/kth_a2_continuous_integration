@@ -24,6 +24,11 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-jre'
 
     implementation 'org.eclipse.jetty.aggregate:jetty-all:7.0.2.v20100331'
+
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:6.4.0.202211300538-r'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit.ssh.apache:6.4.0.202211300538-r'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit.gpg.bc:6.4.0.202211300538-r'
+
 }
 
 application {
@@ -34,4 +39,7 @@ application {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+compileJava {
+    options.release = 18
 }

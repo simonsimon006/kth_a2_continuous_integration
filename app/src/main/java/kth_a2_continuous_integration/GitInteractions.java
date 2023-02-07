@@ -1,34 +1,79 @@
 package kth_a2_continuous_integration;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.FileUtils;
+import org.eclipse.jetty.util.Scanner;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
+import org.json.JSONObject;
 
 public class GitInteractions {
-    public static boolean pull(String url, String branch){
-        
-        try {
-            Git.cloneRepository()
-            .setURI("https://github.com/simonsimon006/kth_a2_continuous_integration")
-            .setDirectory(new File("gittest")) 
-            .call();
-            return true;
-        } catch (InvalidRemoteException e) {
-            // Remote could not be found
-            return false;
-        } catch (TransportException e) {
-            // Could not download repository to location
-            return false;
-        } catch (GitAPIException e) {
-            // Incorrect usage of git api
-            return false;
-        }
+
+    /**
+     * Downloads the git repository and branch specified to the server. 
+     * Processes HTTP request automatically.
+     * @param request HTTP request containing git webhook request with json formating.
+     * @throws IOException
+     * @throws InvalidRemoteException
+     * @throws TransportException
+     * @throws GitAPIException
+     */
+    public static void download(HttpServletRequest request) throws IOException, InvalidRemoteException, TransportException, GitAPIException{        
+        JSONObject json = new JSONObject(payload(request));
+        String repositoryURL = json.getJSONObject("repository").getString("html_url");
+        String branch = json.getString("ref");
+        System.out.println(branch);
+        System.out.println(repositoryURL);
+        pull(repositoryURL, branch);
+    }
+    /**
+     * Deletes local directory where git repository is stored.
+     * @throws IOException
+     */
+    public static void cleanUp() throws IOException{
+        FileUtils.deleteDirectory(new File("git_repo"));
     }
 
-    public static void delete(){
-        
+    /**
+     * Downloads the git repository and branch specified to the server.
+     * @param url the url of the git repository to check out
+     * @param branch the branch to check out
+     * @throws InvalidRemoteException
+     * @throws TransportException
+     * @throws GitAPIException
+     */
+    static void pull(String url, String branch) throws InvalidRemoteException, TransportException, GitAPIException{
+        Git.cloneRepository()
+        .setURI(url)
+        .setBranchesToClone(Arrays.asList(branch))
+        .setBranch(branch)
+        .setDirectory(new File("git_repo")) 
+        .call()
+        .close();
+    }
+
+    /**
+     * Returns the json object from the github webhook request payload encoded as a string.
+     * @param request the request from the github webhook.
+     * @return the payload json formated as a string.
+     * @throws IOException
+     */
+    static String payload(HttpServletRequest request) throws IOException{
+        BufferedReader br = request.getReader();
+        StringBuilder builder = new StringBuilder(); 
+        String line;
+        while((line = br.readLine()) != null){
+            builder.append(line);
+            builder.append(System.lineSeparator());
+        }
+        return builder.toString();
     }
 }

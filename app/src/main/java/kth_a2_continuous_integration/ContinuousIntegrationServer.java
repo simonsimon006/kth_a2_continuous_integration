@@ -18,7 +18,9 @@ import org.gradle.tooling.*;
  * See the Jetty documentation for API documentation of those classes.
  */
 public class ContinuousIntegrationServer extends AbstractHandler {
-	private String compilePath = "/home/simon/Code/DECIDE/";
+
+	// Set this to the path where you clone the repo to.
+	private String compilePath = "/home/user/DECIDE/";
 	
 	public void handle(String target,
 			Request baseRequest,
@@ -29,8 +31,6 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		response.setStatus(HttpServletResponse.SC_OK);
 		baseRequest.setHandled(true);
 
-		System.out.println(target);
-
 		// here you do all the continuous integration tasks
 		// for example
 		// 1st clone your repository
@@ -40,10 +40,18 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 						this.compilePath))
 				.connect();
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-
+		
+		if (target.equals("/compile"))
+			try {
+				connection.newBuild().forTasks("build").setStandardOutput(output).run();
+			} catch (Exception e) {
+				response.getWriter().println(e.getMessage());
+			} finally {
+				connection.close();
+			}
+		else if (target.equals("/test"))
 		try {
-
-			connection.newBuild().forTasks("build").setStandardOutput(output).run();
+			connection.newTestLauncher().run();
 		} catch (Exception e) {
 			response.getWriter().println(e.getMessage());
 		} finally {

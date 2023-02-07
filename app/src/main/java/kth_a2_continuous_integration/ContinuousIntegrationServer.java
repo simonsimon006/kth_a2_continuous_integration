@@ -18,6 +18,8 @@ import org.gradle.tooling.*;
  * See the Jetty documentation for API documentation of those classes.
  */
 public class ContinuousIntegrationServer extends AbstractHandler {
+	private String compilePath = "/home/simon/Code/DECIDE/";
+	
 	public void handle(String target,
 			Request baseRequest,
 			HttpServletRequest request,
@@ -35,7 +37,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		// 2nd compile the code
 		ProjectConnection connection = GradleConnector.newConnector()
 				.forProjectDirectory(new File(
-						"/home/simon/Code/DECIDE/"))
+						this.compilePath))
 				.connect();
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -54,7 +56,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	// used to start the CI server in command line
 	public static void main(String[] args) throws Exception {
 
-		Server server = new Server(8080);
+		Server server = new Server(9000);
 		server.setHandler(new ContinuousIntegrationServer());
 		server.start();
 		server.join();

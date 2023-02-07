@@ -37,7 +37,8 @@ public class ContinuousIntegrationServer extends AbstractHandler
         // for example
         // 1st clone your repository
         // 2nd compile the code
-
+        //String msg = CommandLine.exec(command, path name);
+        
         response.getWriter().println("CI job done");
     }
  

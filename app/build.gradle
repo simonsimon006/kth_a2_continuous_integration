@@ -26,9 +26,13 @@ dependencies {
 
     implementation 'org.eclipse.jetty.aggregate:jetty-all:7.0.2.v20100331'
     // For mail
-    implementation 'jakarta.mail:jakarta.mail-api:2.1.1'
-    implementation 'org.eclipse.angus:jakarta.mail:2.0.1'
-    implementation 'com.sun.activation:jakarta.activation:2.0.0'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+
+    // NOT NEEDED:
+    // implementation 'jakarta.mail:jakarta.mail-api:2.1.1'
+    // implementation 'org.eclipse.angus:jakarta.mail:2.0.1'
+    // implementation 'com.sun.activation:jakarta.activation:2.0.0'
+
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.4.0.202211300538-r'
     implementation 'org.eclipse.jgit:org.eclipse.jgit.ssh.apache:6.4.0.202211300538-r'
     implementation 'org.eclipse.jgit:org.eclipse.jgit.gpg.bc:6.4.0.202211300538-r'
@@ -50,5 +54,5 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 compileJava {
-    options.release = 18
+    // options.release = 18
 }

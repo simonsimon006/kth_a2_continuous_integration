@@ -1,9 +1,13 @@
 package kth_a2_continuous_integration;
 
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.util.StreamProvider;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.*;
+import javax.mail.Transport;
 
 import java.util.Properties;
 

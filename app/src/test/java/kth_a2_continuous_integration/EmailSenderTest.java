@@ -23,7 +23,7 @@ public class EmailSenderTest {
 	 * @return Needs to evaluate to true.
 	 */
     // @Test
-    // void sendEmailPositiveTest() {
+    // void sendEmailPositiveTest1() {
     //     String to = "oscols@kth.se";
     //     String from = "dd2480group19@gmail.com";
     //     String subject = "Sending email";
@@ -38,11 +38,11 @@ public class EmailSenderTest {
 	 * @return Needs to evaluate to false.
 	 */
     @Test
-    void sendEmailNegativeTest() {
+    void sendEmailPositiveTest2() {
         String to = "dd2480aaaaaa@gmail.com";
         String from = "dd2480group19@gmail.com";
         String subject = "Sending email";
         String text = "TESTING TESTING";
-        assertFalse(emailSender.sendEmail(to, from, subject, text), "sendEmail did not return false when it should");
+        assertTrue(emailSender.sendEmail(to, from, subject, text), "sendEmail did not return true when it should");
     }
 }

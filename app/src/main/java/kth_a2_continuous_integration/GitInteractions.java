@@ -26,13 +26,14 @@ public class GitInteractions {
      * @throws TransportException
      * @throws GitAPIException
      */
-    public static void download(HttpServletRequest request) throws IOException, InvalidRemoteException, TransportException, GitAPIException{        
+    public static String download(HttpServletRequest request) throws IOException, InvalidRemoteException, TransportException, GitAPIException{        
         JSONObject json = new JSONObject(payload(request));
         String repositoryURL = json.getJSONObject("repository").getString("html_url");
         String branch = json.getString("ref");
         System.out.println(branch);
         System.out.println(repositoryURL);
         pull(repositoryURL, branch);
+        return json.getJSONObject("pusher").getString("email");
     }
     /**
      * Deletes local directory where git repository is stored.

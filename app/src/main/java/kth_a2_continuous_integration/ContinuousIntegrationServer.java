@@ -64,9 +64,11 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		// here you do all the continuous integration tasks
 		// for example
 		String output ="";
+
+		String to = "";
 		try {
 			// 1st clone your repository
-			GitInteractions.download(request);
+			to = GitInteractions.download(request);
 			// 2nd compile the code
 			output = execute(target);
 
@@ -87,7 +89,6 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		}
 
         EmailSender emailSender = new EmailSender();
-        String to = "oscols@kth.se";
         String from = "dd2480group19@gmail.com";
         String subject = "Project build";
         String text = output;
@@ -104,7 +105,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	public static void main(String[] args) throws Exception {
 
 
-		Server server = new Server(5500);
+		Server server = new Server(9000);
 		server.setHandler(new ContinuousIntegrationServer());
 		server.start();
 		server.join();

@@ -7,18 +7,17 @@ import jakarta.mail.util.StreamProvider;
 
 import java.util.Properties;
 
-/*
- * Class to enable email to be sent upon builds.
+/**
+ * Class to enable email to be sent upon builds, by use of method sendEmail().
  */
 public class EmailSender {
 
     /**
-     * Function to send a mail from dd2480group19@gmail.com to the selected recipient.
-     * 
-     * @param to the recipient
-     * @param from the sender
-     * @param subject the subject of the mail
-     * @param text the text of the mail
+     * Sends an email from dd2480group19@gmail.com to the selected recipient.
+     * @param to        the recipient
+     * @param from      the sender
+     * @param subject   the subject of the mail
+     * @param text      the text of the mail
      * @return true if email was sent successfully, false otherwise
      */
     public boolean sendEmail(String to, String from, String subject, String text) {
@@ -31,6 +30,7 @@ public class EmailSender {
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.host", "smtp.gmail.com");
 
+        // Do not put any sensitive information below, not secure
         String username = "dd2480group19@gmail.com";
         String password = "mmqtxacpwfruadnx";
 
@@ -56,5 +56,4 @@ public class EmailSender {
 
         return flag;
     }
-
 }

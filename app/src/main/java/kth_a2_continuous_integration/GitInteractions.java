@@ -15,18 +15,25 @@ import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.json.JSONObject;
 
+/**
+ * Handles Git interactions such as downloading repository, 
+ * deleting local directory, pulling, 
+ */
 public class GitInteractions {
 
     /**
-     * Downloads the git repository and branch specified to the server. 
+     * Downloads the Git repository and branch specified to the server. 
      * Processes HTTP request automatically.
-     * @param request HTTP request containing git webhook request with json formating.
+     * @param request   HTTP request containing Git webhook request 
+     *                  with json formatting.
      * @throws IOException
      * @throws InvalidRemoteException
      * @throws TransportException
      * @throws GitAPIException
      */
-    public static String download(HttpServletRequest request) throws IOException, InvalidRemoteException, TransportException, GitAPIException{        
+    public static String download(HttpServletRequest request) 
+                            throws IOException, InvalidRemoteException, 
+                            TransportException, GitAPIException{        
         JSONObject json = new JSONObject(payload(request));
         String repositoryURL = json.getJSONObject("repository").getString("html_url");
         String branch = json.getString("ref");
@@ -35,8 +42,9 @@ public class GitInteractions {
         pull(repositoryURL, branch);
         return json.getJSONObject("pusher").getString("email");
     }
+
     /**
-     * Deletes local directory where git repository is stored.
+     * Deletes local directory where Git repository is stored.
      * @throws IOException
      */
     public static void cleanUp() throws IOException{
@@ -44,14 +52,16 @@ public class GitInteractions {
     }
 
     /**
-     * Downloads the git repository and branch specified to the server.
-     * @param url the url of the git repository to check out
-     * @param branch the branch to check out
+     * Downloads the Git repository and branch specified to the server.
+     * @param url       the URL of the Git repository to check out
+     * @param branch    the branch to check out
      * @throws InvalidRemoteException
      * @throws TransportException
      * @throws GitAPIException
      */
-    static void pull(String url, String branch) throws InvalidRemoteException, TransportException, GitAPIException{
+    static void pull(String url, String branch) throws InvalidRemoteException, 
+                                                    TransportException, 
+                                                    GitAPIException{
         Git.cloneRepository()
         .setURI(url)
         .setBranchesToClone(Arrays.asList(branch))
@@ -62,8 +72,8 @@ public class GitInteractions {
     }
 
     /**
-     * Returns the json object from the github webhook request payload encoded as a string.
-     * @param request the request from the github webhook.
+     * Returns the json object from the GitHub webhook request payload encoded as a string.
+     * @param request the request from the GitHub webhook.
      * @return the payload json formated as a string.
      * @throws IOException
      */

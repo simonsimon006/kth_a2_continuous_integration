@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.TransportException;
 
 /**
  * Skeleton of a ContinuousIntegrationServer which acts as webhook
@@ -37,11 +40,11 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	String execute(String target) throws IOException {
 		String result = "";
 		try {
-			if (target.equals("/compile")) {
-				result += CommandLine.exec("./gradlew build", compilePath);
-			} else if (target.equals("/test")) {
-				result += CommandLine.exec("./gradlew test", compilePath);
-			}
+				result += "BUILD RESULT:\n";
+				result += CommandLine.exec("gradlew build", compilePath);
+				result += "TEST RESULT:\n";
+				result += CommandLine.exec("gradlew test", compilePath);
+			
 		} catch (Exception e) {
 			result += e.getMessage();
 			System.out.println(result);
@@ -60,17 +63,38 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 
 		// here you do all the continuous integration tasks
 		// for example
-		// 1st clone your repository
-		// 2nd compile the code
-		String output = execute(target);
-		response.getWriter().println(output.toString());
+		String output ="";
+		try {
+			// 1st clone your repository
+			GitInteractions.download(request);
+			// 2nd compile the code
+			output = execute(target);
+
+			GitInteractions.cleanUp();
+
+		} catch (InvalidRemoteException e) {
+			// TODO Auto-generated catch block
+			output += e.getMessage();
+			e.printStackTrace();
+		} catch (TransportException e) {
+			// TODO Auto-generated catch block
+			output += e.getMessage();
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			output += e.getMessage();
+			e.printStackTrace();
+		}
+		
+		System.out.println(output);
+		response.getWriter().println(output);
 	}
 
 	// used to start the CI server in command line
 	public static void main(String[] args) throws Exception {
 
 
-		Server server = new Server(9000);
+		Server server = new Server(5500);
 		server.setHandler(new ContinuousIntegrationServer());
 		server.start();
 		server.join();

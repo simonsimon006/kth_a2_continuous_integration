@@ -3,6 +3,8 @@ package kth_a2_continuous_integration;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,9 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
+import java.util.logging.*;
+import java.io.File;
+import java.util.Scanner;
 
 /**
  * Skeleton of a ContinuousIntegrationServer which acts as webhook
@@ -23,7 +28,15 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 
 	// Set this to the path where you clone the repo to.
 	private String compilePath = "git_repo";
+	private String logpath = "commits.log";
+	Logger logger = Logger.getLogger("commits");
 
+	ContinuousIntegrationServer() throws IOException {
+		FileHandler handler = new FileHandler(this.logpath);
+		handler.setLevel(Level.INFO);
+		this.logger.addHandler(handler);
+		this.logger.addHandler(new ConsoleHandler());
+	}
 	/**
 	 * This function connects to the gradle repository stored under
 	 * this.compilePath. If target
@@ -40,15 +53,15 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	String execute(String target) throws IOException {
 		String result = "";
 		try {
-				result += "BUILD RESULT:\n";
-				result += CommandLine.exec("gradlew build", compilePath);
-				result += "TEST RESULT:\n";
-				result += CommandLine.exec("gradlew test", compilePath);
-			
+			result += "BUILD RESULT:\n";
+			result += CommandLine.exec("gradlew build", compilePath);
+			result += "TEST RESULT:\n";
+			result += CommandLine.exec("gradlew test", compilePath);
+
 		} catch (Exception e) {
 			result += e.getMessage();
 			System.out.println(result);
-		} 
+		}
 		return result;
 	}
 
@@ -60,10 +73,19 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		response.setContentType("text/html;charset=utf-8");
 		response.setStatus(HttpServletResponse.SC_OK);
 		baseRequest.setHandled(true);
-
+		
+		// I am sorry.
+		if (target.equals("/logs")) {
+			try {
+				response.getWriter().write(Files.readString(Path.of(this.logpath)));
+			} catch (Exception e) {
+				response.getWriter().println(e.getMessage());
+			}
+			return;
+		}
 		// here you do all the continuous integration tasks
 		// for example
-		String output ="";
+		String output = "";
 
 		String to = "";
 		try {
@@ -88,22 +110,19 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 			e.printStackTrace();
 		}
 
-        EmailSender emailSender = new EmailSender();
-        String from = "dd2480group19@gmail.com";
-        String subject = "Project build";
-        String text = output;
+		EmailSender emailSender = new EmailSender();
+		String from = "dd2480group19@gmail.com";
+		String subject = "Project build";
+		String text = output;
 
-        emailSender.sendEmail(to, from, subject, text);
+		emailSender.sendEmail(to, from, subject, text);
 
-
-		
-		System.out.println(output);
+		logger.info(output);
 		response.getWriter().println(output);
 	}
 
 	// used to start the CI server in command line
 	public static void main(String[] args) throws Exception {
-
 
 		Server server = new Server(9000);
 		server.setHandler(new ContinuousIntegrationServer());

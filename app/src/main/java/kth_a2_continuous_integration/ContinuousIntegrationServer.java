@@ -77,8 +77,6 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		response.setStatus(HttpServletResponse.SC_OK);
 		baseRequest.setHandled(true);
 		
-		String json = GitInteractions.payload(request);
-		Files.writeString(Path.of("json.json"), json);
 		// I am sorry.
 		if (target.equals("/logs")) {
 			try {

@@ -21,43 +21,44 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 
 	// Set this to the path where you clone the repo to.
 	private String compilePath = "/home/user/DECIDE/";
-	
+
 	/**
-	 * This function connects to the gradle repository stored under this.compilePath. If target
-	 * equals "/compile" it executes the build task in the repo, for "/test" it exectues the test task.
+	 * This function connects to the gradle repository stored under
+	 * this.compilePath. If target
+	 * equals "/compile" it executes the build task in the repo, for "/test" it
+	 * exectues the test task.
 	 * The console log of these actions is returned as a string.
-	 * @param target "The HTTP target as given by the HTTP handle function."
-	 * @param response "An HttpServletResponse as given by the HTTP handle function."
+	 * 
+	 * @param target   "The HTTP target as given by the HTTP handle function."
+	 * @param response "An HttpServletResponse as given by the HTTP handle
+	 *                 function."
 	 * @return
 	 * @throws IOException
 	 */
-	private String execute(String target, HttpServletResponse response) throws IOException {
+	String execute(String target) throws IOException {
 		ProjectConnection connection = GradleConnector.newConnector()
 				.forProjectDirectory(new File(
 						this.compilePath))
 				.connect();
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		
-		if (target.equals("/compile"))
-			try {
-				connection.newBuild().forTasks("build").setStandardOutput(output).run();
-			} catch (Exception e) {
-				response.getWriter().println(e.getMessage());
-			} finally {
-				connection.close();
-			}
-		else if (target.equals("/test"))
+		String errorMessage = "";
 		try {
-			connection.newTestLauncher().run();
+			if (target.equals("/compile")) {
+				connection.newBuild().forTasks("build").setStandardOutput(output).run();
+			} else if (target.equals("/test")) {
+				connection.newTestLauncher().run();
+			}
 		} catch (Exception e) {
-			response.getWriter().println(e.getMessage());
+			errorMessage = e.getMessage();
+			System.out.println(errorMessage);
 		} finally {
 			connection.close();
 		}
 		String result = output.toString();
 		output.close();
-		return 	result;
+		return result + errorMessage;
 	}
+
 	public void handle(String target,
 			Request baseRequest,
 			HttpServletRequest request,
@@ -71,7 +72,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		// for example
 		// 1st clone your repository
 		// 2nd compile the code
-		String output = execute(target, response);
+		String output = execute(target);
 		response.getWriter().println(output.toString());
 	}
 

@@ -85,6 +85,16 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 			output += e.getMessage();
 			e.printStackTrace();
 		}
+
+        EmailSender emailSender = new EmailSender();
+        String to = "oscols@kth.se";
+        String from = "dd2480group19@gmail.com";
+        String subject = "Project build";
+        String text = output;
+
+        emailSender.sendEmail(to, from, subject, text);
+
+
 		
 		System.out.println(output);
 		response.getWriter().println(output);

@@ -1,8 +1,8 @@
 package kth_a2_continuous_integration;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +14,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
+import java.util.logging.*;
 
 /**
  * Skeleton of a Continuous Integration server which acts as webhook.
@@ -24,7 +25,16 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 
 	// Set this to the path where you clone the repo to
 	private String compilePath = "git_repo";
+	private String logpath = "commits.log";
+	Logger logger = Logger.getLogger("commits");
 
+	ContinuousIntegrationServer() throws IOException {
+		FileHandler handler = new FileHandler(this.logpath, true);
+		handler.setLevel(Level.INFO);
+
+		this.logger.addHandler(handler);
+		this.logger.addHandler(new ConsoleHandler());
+	}
 	/**
 	 * Executes build and test tasks in the repository.
 	 * Connects to the Gradle repository stored under this.compilePath.
@@ -48,11 +58,10 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 					result += CommandLine.exec("gradlew test", compilePath);
 				else
 					result += CommandLine.exec("./gradlew test", compilePath);
-			
 		} catch (Exception e) {
 			result += e.getMessage();
 			System.out.println(result);
-		} 
+		}
 		return result;
 	}
 	
@@ -73,9 +82,22 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		response.setContentType("text/html;charset=utf-8");
 		response.setStatus(HttpServletResponse.SC_OK);
 		baseRequest.setHandled(true);
+		
+		String json = GitInteractions.payload(request);
+		Files.writeString(Path.of("json.json"), json);
+		// I am sorry.
+		if (target.equals("/logs")) {
+			try {
+				response.getWriter().write(Files.readString(Path.of(this.logpath)));
+			} catch (Exception e) {
+				response.getWriter().println(e.getMessage());
+			}
+			return;
+		}
+		// here you do all the continuous integration tasks
+		// for example
+		String output = "";
 
-		// Here you do all the continuous integration tasks
-		String output ="";
 		String to = "";
 
 		try {
@@ -94,16 +116,18 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 			output += e.getMessage();
 			e.printStackTrace();
 		}
+    
+    // Send email notification
+		EmailSender emailSender = new EmailSender();
+		String from = "dd2480group19@gmail.com";
+		String subject = "Project build";
+		String text = output;
+		emailSender.sendEmail(to, from, subject, text);
 
-		// Send email notification
-        EmailSender emailSender = new EmailSender();
-        String from = "dd2480group19@gmail.com";
-        String subject = "Project build";
-        String text = output;
-        emailSender.sendEmail(to, from, subject, text);
-		
-		System.out.println(output);
+		logger.info(output);
+
 		response.getWriter().println(output);
+		response.setStatus(HttpServletResponse.SC_ACCEPTED);
 	}
 
 	/** 

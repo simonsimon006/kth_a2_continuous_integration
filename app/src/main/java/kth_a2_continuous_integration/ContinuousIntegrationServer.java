@@ -1,7 +1,5 @@
 package kth_a2_continuous_integration;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,8 +15,6 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
 import java.util.logging.*;
-import java.io.File;
-import java.util.Scanner;
 
 /**
  * Skeleton of a ContinuousIntegrationServer which acts as webhook

@@ -43,7 +43,23 @@ The goal of this assignment is to master the core of continuous integration. To 
 </p>
 
 ## How to Run Compilation and Testing
-==[TO BE ADDED: "the group or the grader checks out the repository, and run compilation and testing through a standard way, documented in the README (in particular `mvn test`, `gradle build` or `make`)".]==
+Install Gradle according to [this guide](https://docs.gradle.org/current/samples/sample_building_java_applications.html) and the Java JDK from [here](https://www.oracle.com/java/technologies/downloads/). We can only guarantee support for Gradle v7.6 and Java version 19, although it would likely work with different versions of Java.  
+
+After installing Gradle and Java download the repository and open a terminal or command prompt. Use **cd** to change directory to the same one where the **gradlew.bat** file is. Run, bundle or test the program by using the gradlew tool. Platform specific commands are listed below.
+
+**Linux/OSX:**  
+- **Run without bundling:** ./gradlew run  
+- **Bundle application:** ./gradlew build  
+- **Test application:** ./gradlew test  
+  
+**Windows:** 
+- **Run without bundling:** gradlew run  
+- **Bundle application:** gradlew build  
+- **Test application:** gradlew test 
+
+To use the program, set up a github webhook with a payload URL indicating the server and its associated port (default 9000). Content type should be application/json. To receive emails, you need to ensure that you do not have your email set to private when you commit. More info [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address).
+
+The server will build and test the branch where your latest commit was made and send an email to your **non-private** email address.
 
 ## Description of Implementation and Unit-Testing
 ### Compilation
@@ -96,7 +112,9 @@ The CI server keeps the history of past builds, see [build list]().
 </a>
 
 [Hans Stammler](https://github.com/hansstammler)
-- x
+- Initialization of gradle project and dependencies
+- GitInteractions.java
+- General skeleton work and bug fixing
 
 ## License
 Copyright 2023 Simon Grunwald, Linnéa Gustafsson, Oscar Olsson, Jesper Slagarp & Hans Stammler

@@ -43,6 +43,6 @@ public class EmailSenderTest {
         String from = "dd2480group19@gmail.com";
         String subject = "Sending email";
         String text = "TESTING TESTING";
-        assertTrue(emailSender.sendEmail(to, from, subject, text), "sendEmail did not return false when it should");
+        assertFalse(emailSender.sendEmail(to, from, subject, text), "sendEmail did not return false when it should");
     }
 }

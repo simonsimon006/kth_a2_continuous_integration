@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.gradle.tooling.*;
 
 /**
  * Skeleton of a ContinuousIntegrationServer which acts as webhook
@@ -20,7 +19,7 @@ import org.gradle.tooling.*;
 public class ContinuousIntegrationServer extends AbstractHandler {
 
 	// Set this to the path where you clone the repo to.
-	private String compilePath = "/home/user/DECIDE/";
+	private String compilePath = "git_repo";
 
 	/**
 	 * This function connects to the gradle repository stored under
@@ -36,27 +35,18 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	 * @throws IOException
 	 */
 	String execute(String target) throws IOException {
-		ProjectConnection connection = GradleConnector.newConnector()
-				.forProjectDirectory(new File(
-						this.compilePath))
-				.connect();
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String errorMessage = "";
+		String result = "";
 		try {
 			if (target.equals("/compile")) {
-				connection.newBuild().forTasks("build").setStandardOutput(output).run();
+				result += CommandLine.exec("./gradlew build", compilePath);
 			} else if (target.equals("/test")) {
-				connection.newTestLauncher().run();
+				result += CommandLine.exec("./gradlew test", compilePath);
 			}
 		} catch (Exception e) {
-			errorMessage = e.getMessage();
-			System.out.println(errorMessage);
-		} finally {
-			connection.close();
-		}
-		String result = output.toString();
-		output.close();
-		return result + errorMessage;
+			result += e.getMessage();
+			System.out.println(result);
+		} 
+		return result;
 	}
 
 	public void handle(String target,
@@ -85,3 +75,4 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 		server.start();
 		server.join();
 	}
+}

@@ -116,6 +116,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 
 		logger.info(output);
 		response.getWriter().println(output);
+		response.setStatus(HttpServletResponse.SC_ACCEPTED);
 	}
 
 	// used to start the CI server in command line

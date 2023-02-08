@@ -83,7 +83,9 @@ We are proud of this project and what we have accomplished in such a short amoun
 </a>
 
 [Simon Grunwald](https://github.com/simonsimon006)
-- x
+- Implementation of the handling of the webhook triggers and logging
+- Part of combining everything together
+- Server Administration
 
 <a href="https://github.com/gustafssonlinnea">
     <img src="https://avatars.githubusercontent.com/u/70338667?v=4" width="25" height="25" style="vertical-align:middle;margin:0px 10px" alt="Linnéa Gustafsson" align="left"/>

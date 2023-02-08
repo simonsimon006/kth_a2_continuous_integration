@@ -32,6 +32,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	 * The console log of these actions is returned as a string.
 	 * @return result String
 	 * @throws IOException
+	 * @see Commandline.exec()
 	 */
 	String execute(String target) throws IOException {
 		String result = "";
@@ -49,12 +50,13 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	}
 	
 	/** 
-	 * Clones repository and compiles the code.
+	 * Clones repository and compiles the code, and sends email notification.
 	 * @param baseRequest
 	 * @param request
 	 * @param response		An HttpServletResponse as given by the HTTP handle function.
 	 * @throws IOException
 	 * @throws ServletException
+	 * @see EmailSender.sendEmail()
 	 */
 	public void handle(String target,
 			Request baseRequest,
@@ -101,6 +103,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	 * Used to start the CI server in command line.
 	 * @param args
 	 * @throws Exception
+	 * @see ContinuousIntegrationServer
 	 */
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(9000);

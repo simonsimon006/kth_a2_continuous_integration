@@ -72,8 +72,7 @@ The server will build and test the branch where your latest commit was made and 
 ==[TO BE ADDED: how notification has been implemented and unit-tested]==
 
 ## Build List
-==[TO BE ADDED: the students document the build list URL in the README, insert URL below]==
-The CI server keeps the history of past builds, see [build list]().
+The CI server keeps the history of past builds, see [build list](http://katzenmonster.de:9000/logs).
 
 ## Statement of Contributions
 We are proud of this project and what we have accomplished in such a short amount of time. The team's creativity has been extremely useful in this project since it facilitated overcoming various predicaments that arised during the imlementation of this CI. Even though this project proved to be quite difficult, we are all convinced that it did yield profound knowledge in how CI servers are implemented. 

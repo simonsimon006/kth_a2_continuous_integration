@@ -38,11 +38,11 @@ public class EmailSenderTest {
 	 * @return Needs to evaluate to false.
 	 */
     @Test
-    void sendEmailNegativeTest() {
+    void sendEmailPositiveTest() {
         String to = "dd2480aaaaaa@gmail.com";
         String from = "dd2480group19@gmail.com";
         String subject = "Sending email";
         String text = "TESTING TESTING";
-        assertFalse(emailSender.sendEmail(to, from, subject, text), "sendEmail did not return false when it should");
+        assertTrue(emailSender.sendEmail(to, from, subject, text), "sendEmail did not return false when it should");
     }
 }

@@ -50,11 +50,17 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	String execute(String target) throws IOException {
 		String result = "";
 		try {
-			result += "BUILD RESULT:\n";
-			result += CommandLine.exec("gradlew build", compilePath);
-			result += "TEST RESULT:\n";
-			result += CommandLine.exec("gradlew test", compilePath);
-
+				String os = System.getProperty("os.name").toLowerCase();
+				result += "BUILD RESULT:\n";
+				if("windows 10".equals(os) || "windows 11".equals(os))
+					result += CommandLine.exec("gradlew build", compilePath);
+				else 
+					result += CommandLine.exec("./gradlew build", compilePath);
+				result += "TEST RESULT:\n";
+				if("windows 10".equals(os) || "windows 11".equals(os))
+					result += CommandLine.exec("gradlew test", compilePath);
+				else
+					result += CommandLine.exec("./gradlew test", compilePath);
 		} catch (Exception e) {
 			result += e.getMessage();
 			System.out.println(result);

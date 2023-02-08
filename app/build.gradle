@@ -50,6 +50,10 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
-compileJava {
-    options.release = 18
+tasks.withType(Tar){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(Zip){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

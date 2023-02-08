@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.eclipse.jetty.aggregate:jetty-all:7.0.2.v20100331'
     // For mail
     implementation 'jakarta.mail:jakarta.mail-api:2.1.1'
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
     implementation 'org.eclipse.angus:jakarta.mail:2.0.1'
     implementation 'com.sun.activation:jakarta.activation:2.0.0'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.4.0.202211300538-r'
@@ -49,6 +50,10 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
-compileJava {
-    options.release = 18
+tasks.withType(Tar){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(Zip){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

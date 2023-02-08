@@ -76,14 +76,16 @@ The server will build and test the branch where your latest commit was made and 
 The CI server keeps the history of past builds, see [build list]().
 
 ## Statement of Contributions
-==[TO BE ADDED: statement of contributions]==
+We are proud of this project and what we have accomplished in such a short amount of time. The team's creativity has been extremely useful in this project since it facilitated overcoming various predicaments that arised during the imlementation of this CI. Even though this project proved to be quite difficult, we are all convinced that it did yield profound knowledge in how CI servers are implemented. 
 
 <a href="https://github.com/simonsimon006">
     <img src="https://avatars.githubusercontent.com/u/1763926?v=4" width="25" height="25" style="vertical-align:middle;margin:0px 10px" alt="Simon Grunwald" align="left"/>
 </a>
 
 [Simon Grunwald](https://github.com/simonsimon006)
-- x
+- Implementation of the handling of the webhook triggers and logging
+- Part of combining everything together
+- Server Administration
 
 <a href="https://github.com/gustafssonlinnea">
     <img src="https://avatars.githubusercontent.com/u/70338667?v=4" width="25" height="25" style="vertical-align:middle;margin:0px 10px" alt="Linnéa Gustafsson" align="left"/>
@@ -98,14 +100,16 @@ The CI server keeps the history of past builds, see [build list]().
 </a>
   
 [Oscar Olsson](https://github.com/oscols)
-- x
+- Created project email
+- Implemented the EmailSender class
 
 <a href="https://github.com/JesperSlagarp">
     <img src="https://avatars.githubusercontent.com/u/61503896?v=4" width="25" height="25" style="vertical-align:middle;margin:0px 10px" alt="Jesper Slagarp" align="left"/>
 </a>
 
 [Jesper Slagarp](https://github.com/JesperSlagarp)
-- x
+- Code for building and testing programatically
+- Did part of combining the different components together
 
 <a href="https://github.com/hansstammler">
     <img src="https://avatars.githubusercontent.com/u/81676569?v=4" width="25" height="25" style="vertical-align:middle;margin:0px 10px" alt="Hans Stammler" align="left"/>

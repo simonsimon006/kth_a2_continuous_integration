@@ -28,8 +28,9 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 	Logger logger = Logger.getLogger("commits");
 
 	ContinuousIntegrationServer() throws IOException {
-		FileHandler handler = new FileHandler(this.logpath);
+		FileHandler handler = new FileHandler(this.logpath, true);
 		handler.setLevel(Level.INFO);
+
 		this.logger.addHandler(handler);
 		this.logger.addHandler(new ConsoleHandler());
 	}

@@ -105,7 +105,8 @@ The CI server keeps the history of past builds, see [build list]().
 </a>
 
 [Jesper Slagarp](https://github.com/JesperSlagarp)
-- x
+- Code for building and testing programatically
+- Did part of combining the different components together
 
 <a href="https://github.com/hansstammler">
     <img src="https://avatars.githubusercontent.com/u/81676569?v=4" width="25" height="25" style="vertical-align:middle;margin:0px 10px" alt="Hans Stammler" align="left"/>

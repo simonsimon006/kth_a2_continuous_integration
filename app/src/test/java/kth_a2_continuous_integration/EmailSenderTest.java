@@ -17,17 +17,19 @@ public class EmailSenderTest {
     /**
 	 * Tests sendEmail to return true when mail and password is correct
      * and the recipient exits.
+     * 
+     * Please leave this test off, for Oscars sanity's sake :) 
 	 * 
 	 * @return Needs to evaluate to true.
 	 */
-    @Test
-    void sendEmailPositiveTest() {
-        String to = "oscols@kth.se";
-        String from = "dd2480group19@gmail.com";
-        String subject = "Sending email";
-        String text = "TESTING TESTING";
-        assertTrue(emailSender.sendEmail(to, from, subject, text), "sendEmail did not return true when it should");
-    }
+    // @Test
+    // void sendEmailPositiveTest() {
+    //     String to = "oscols@kth.se";
+    //     String from = "dd2480group19@gmail.com";
+    //     String subject = "Sending email";
+    //     String text = "TESTING TESTING";
+    //     assertTrue(emailSender.sendEmail(to, from, subject, text), "sendEmail did not return true when it should");
+    // }
 
     /**
 	 * Tests sendEmail to return false when mail and password is correct

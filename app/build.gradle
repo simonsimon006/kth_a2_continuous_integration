@@ -24,6 +24,13 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-jre'
 
     implementation 'org.eclipse.jetty.aggregate:jetty-all:7.0.2.v20100331'
+
+    // For mail
+    implementation 'jakarta.mail:jakarta.mail-api:2.1.1'
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+    implementation 'org.eclipse.angus:jakarta.mail:2.0.1'
+    implementation 'com.sun.activation:jakarta.activation:2.0.0'
+
 }
 
 application {

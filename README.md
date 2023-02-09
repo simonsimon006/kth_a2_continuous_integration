@@ -31,6 +31,7 @@ This is the repository for *Assignment #2: Continuous Integration* in the course
     - [Notification](#notification)
   - [Build List](#build-list)
   - [Statement of Contributions](#statement-of-contributions)
+  - [Essence Evaluation](#essence-evaluation)
   - [License](#license)
 
 </span>
@@ -118,6 +119,9 @@ We are proud of this project and what we have accomplished in such a short amoun
 - Initialization of gradle project and dependencies
 - GitInteractions.java
 - General skeleton work and bug fixing
+
+## Essence Evaluation
+We are in the *Working Well *state (and soon *Retired*). Looking at the lower states, *Principles Established* is fulfilled because we, e.g., agreed that we needed tools to communicate, collaborate (with coding), and document. We also agreed on assigning tasks to be able to work individually. *Foundation Established* is fulfilled because we, for example, agreed on linking to issues in our commits, creating branches for all issues, using Git for task management, using Gradle as a build tool, and using Discord for communication. Also, the strengths and weaknesses of the group members were discussed. The *In Use* state is fulfilled since, for instance, the team is working, and the tools are used in order to do real work. Additionally, testing is performed, communication and collaboration are supported by Git and Discord, and issues on Git are used to handle feedback. *In Place* is fulfilled because the whole team is using Git and the corresponding practices, and all of our members have access to the GitHub repository, etc. Finally, *Working Well* is fulfilled because we have gotten used to the way we work and proper commit messages, etc. are made without much thought. Also, every member of the team knows how to use the required tools for their tasks and makes progress as planned. Now, it’s time for the *Retired* state :) 
 
 ## License
 Copyright 2023 Simon Grunwald, Linnéa Gustafsson, Oscar Olsson, Jesper Slagarp & Hans Stammler

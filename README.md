@@ -93,6 +93,7 @@ We are proud of this project and what we have accomplished in such a short amoun
 [Linnéa Gustafsson](https://github.com/gustafssonlinnea)
 - Managing issues that correspond to the requirements
 - Foundation for README
+- Ensuring all public classes and methods are well-documented and follow code conventions
 
 <a href="https://github.com/oscols">
     <img src="https://avatars.githubusercontent.com/u/83168314?v=4" width="25" height="25" style="vertical-align:middle;margin:0px 10px" alt="Oscar Olsson" align="left"/>
@@ -108,14 +109,14 @@ We are proud of this project and what we have accomplished in such a short amoun
 
 [Jesper Slagarp](https://github.com/JesperSlagarp)
 - Code for building and testing programatically
-- Did part of combining the different components together
+- Part of combining the different components together
 
 <a href="https://github.com/hansstammler">
     <img src="https://avatars.githubusercontent.com/u/81676569?v=4" width="25" height="25" style="vertical-align:middle;margin:0px 10px" alt="Hans Stammler" align="left"/>
 </a>
 
 [Hans Stammler](https://github.com/hansstammler)
-- Initialization of gradle project and dependencies
+- Initialization of Gradle project and dependencies
 - GitInteractions.java
 - General skeleton work and bug fixing
 
